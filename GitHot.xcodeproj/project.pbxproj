@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E032CA11F6AB87100B83434 /* PaversArgo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECFC9C31F6AA2550001317F /* PaversArgo.framework */; };
+		0E032CA21F6AB87100B83434 /* PaversArgo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECFC9C31F6AA2550001317F /* PaversArgo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0E032CAE1F6AB97100B83434 /* Ji.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E032CAD1F6AB97100B83434 /* Ji.framework */; };
+		0E032CAF1F6AB97100B83434 /* Ji.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0E032CAD1F6AB97100B83434 /* Ji.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0E6312F01F6A1D3200F67CC2 /* CGPointAdditions.c in Sources */ = {isa = PBXBuildFile; fileRef = 0E6312B41F6A1D3200F67CC2 /* CGPointAdditions.c */; };
 		0E6312F11F6A1D3200F67CC2 /* BackFragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 0E6312B71F6A1D3200F67CC2 /* BackFragmentShader.glsl */; };
 		0E6312F21F6A1D3200F67CC2 /* BackPageGradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E6312B81F6A1D3200F67CC2 /* BackPageGradient.png */; };
@@ -56,6 +60,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0E032CA31F6AB87100B83434 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0ECFC9B11F6AA2550001317F /* Pavers.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 0E3D75901F4DC5E600FFD6C3;
+			remoteInfo = PaversArgo;
+		};
 		0E78735B1F4BFDBD002600BE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0E78733E1F4BFDBC002600BE /* Project object */;
@@ -191,10 +202,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0E032CA21F6AB87100B83434 /* PaversArgo.framework in Embed Frameworks */,
 				0ECFC9CB1F6AA2850001317F /* PaversFRP.framework in Embed Frameworks */,
 				0ECFC9C71F6AA2850001317F /* PaversUI.framework in Embed Frameworks */,
 				0ECFC9D31F6AA2850001317F /* Down.framework in Embed Frameworks */,
 				0ECFC9CF1F6AA2850001317F /* GHAPI.framework in Embed Frameworks */,
+				0E032CAF1F6AB97100B83434 /* Ji.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +215,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E032CAD1F6AB97100B83434 /* Ji.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Ji.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E43A5151F53FF53007C8E20 /* GitHot.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = GitHot.playground; sourceTree = "<group>"; };
 		0E6312B41F6A1D3200F67CC2 /* CGPointAdditions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CGPointAdditions.c; sourceTree = "<group>"; };
 		0E6312B51F6A1D3200F67CC2 /* CGPointAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPointAdditions.h; sourceTree = "<group>"; };
@@ -262,10 +276,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E032CA11F6AB87100B83434 /* PaversArgo.framework in Frameworks */,
 				0ECFC9CA1F6AA2850001317F /* PaversFRP.framework in Frameworks */,
 				0ECFC9C61F6AA2850001317F /* PaversUI.framework in Frameworks */,
 				0ECFC9D21F6AA2850001317F /* Down.framework in Frameworks */,
 				0ECFC9CE1F6AA2850001317F /* GHAPI.framework in Frameworks */,
+				0E032CAE1F6AB97100B83434 /* Ji.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,6 +457,7 @@
 		0E78733D1F4BFDBC002600BE = {
 			isa = PBXGroup;
 			children = (
+				0E032CAD1F6AB97100B83434 /* Ji.framework */,
 				0E43A5151F53FF53007C8E20 /* GitHot.playground */,
 				0E7873691F4BFE5A002600BE /* Frameworks */,
 				0E7873481F4BFDBC002600BE /* GitHot */,
@@ -551,6 +568,7 @@
 				0ECFC9CD1F6AA2850001317F /* PBXTargetDependency */,
 				0ECFC9D11F6AA2850001317F /* PBXTargetDependency */,
 				0ECFC9D51F6AA2850001317F /* PBXTargetDependency */,
+				0E032CA41F6AB87100B83434 /* PBXTargetDependency */,
 			);
 			name = GitHot;
 			productName = GitHot;
@@ -798,6 +816,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0E032CA41F6AB87100B83434 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PaversArgo;
+			targetProxy = 0E032CA31F6AB87100B83434 /* PBXContainerItemProxy */;
+		};
 		0E78735C1F4BFDBD002600BE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0E7873451F4BFDBC002600BE /* GitHot */;
