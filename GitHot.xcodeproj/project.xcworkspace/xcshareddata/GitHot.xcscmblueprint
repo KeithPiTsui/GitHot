@@ -1,0 +1,29 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9" : 9223372036854775807,
+    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0A610BA2-FBB1-4348-BAA4-D56EB3A569D0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9" : "GitHot\/Frameworks\/GHAPI\/",
+    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : "GitHot\/GHAPI\/Pavers\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GitHot",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "GitHot.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/Pavers.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/GHAPI.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9"
+    }
+  ]
+}
