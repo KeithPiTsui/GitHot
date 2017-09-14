@@ -18,11 +18,7 @@ internal final class ReadmeViewController: UIViewController {
   fileprivate var webView: DownView?
 
   var interactor:Interactor? = nil
-
-  internal func set(markup url: URL) {
-    self.viewModel.inputs.set(markup: url)
-  }
-
+  
   internal func set(repo: RepoProfile) {
     self.viewModel.inputs.set(repo: repo)
   }
@@ -30,16 +26,21 @@ internal final class ReadmeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    if let wv = try? DownView(frame: CGRect.zero, markdownString: "") {
+    self.view.backgroundColor = .white
+
+    if let wv = try? DownView() {
+
       self.view.addSubview(wv)
-      self.webView = wv
       wv.translatesAutoresizingMaskIntoConstraints = false
       wv.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
       wv.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.topAnchor).isActive = true
       wv.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
       wv.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+
       wv.scrollView.delegate = self
       wv.navigationDelegate = self
+
+      self.webView = wv
     }
 
     self.orignalFrame = self.view.frame
@@ -63,50 +64,48 @@ internal final class ReadmeViewController: UIViewController {
     }
   }
 
-  var orignalFrame: CGRect = .zero
-
-  func handleGesture(_ y: CGFloat, state: DraggingState) {
-
-    DispatchQueue.main.async {
-      guard let interactor = self.interactor else { return }
-      if y > 0 {
-        interactor.hasStarted = false
-        interactor.cancel()
-        self.view.frame = self.orignalFrame
-        return
-      }
-
-      let percentThreshold:CGFloat = 0.4
-      let height = UIScreen.main.bounds.size.height
-
-      let progress = min( abs(y) / (height / 4), 1)
-
-      switch state {
-      case .began:
-        interactor.hasStarted = true
-        self.dismiss(animated: true, completion: nil)
-      case .changed:
-        if interactor.hasStarted == false { return }
-        interactor.shouldFinish = progress > percentThreshold
-        interactor.update(progress)
-      case .ended:
-        interactor.hasStarted = false
-        if interactor.shouldFinish { interactor.finish() } else {
-          interactor.cancel()
-          self.view.frame = self.orignalFrame
-        }
-      }
-    }
-  }
-
+  fileprivate var orignalFrame: CGRect = .zero
 }
 
-enum DraggingState {
-  case began
-  case changed
-  case ended
-}
+//extension ReadmeViewController {
+//
+//  override var preferredStatusBarStyle: UIStatusBarStyle {
+//
+//    guard var targetViewController = self.presentingViewController else {
+//      return .lightContent
+//    }
+//
+//    while let parentViewController = targetViewController.parent {
+//      targetViewController = parentViewController
+//    }
+//
+//    while let childViewController = targetViewController.childViewControllerForStatusBarStyle {
+//      targetViewController = childViewController
+//    }
+//
+//    return targetViewController.preferredStatusBarStyle
+//  }
+//
+//  override var prefersStatusBarHidden: Bool {
+//
+//    guard var targetViewController = self.presentingViewController else {
+//      return false
+//    }
+//
+//    while let parentViewController = targetViewController.parent {
+//      targetViewController = parentViewController
+//    }
+//
+//    while let childViewController = targetViewController.childViewControllerForStatusBarHidden {
+//      targetViewController = childViewController
+//    }
+//
+//    return targetViewController.prefersStatusBarHidden
+//  }
+//}
 
+
+// MARK: - WebView navigation handling
 
 extension ReadmeViewController: WKNavigationDelegate {
   /*! @abstract Decides whether to allow or cancel a navigation.
@@ -204,7 +203,7 @@ extension ReadmeViewController: WKNavigationDelegate {
                       completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?)
     -> Swift.Void) {
     print("\(#function)--\(challenge)")
-    completionHandler(.useCredential, nil)
+    completionHandler(.performDefaultHandling, nil)
   }
 
 
@@ -217,7 +216,15 @@ extension ReadmeViewController: WKNavigationDelegate {
   }
 }
 
+
+// MARK: - Drag down to back handling
+
 extension ReadmeViewController: UIScrollViewDelegate {
+  fileprivate enum DraggingState {
+    case began
+    case changed
+    case ended
+  }
 
   // began
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -232,6 +239,39 @@ extension ReadmeViewController: UIScrollViewDelegate {
   // ended
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
     self.handleGesture(scrollView.bounds.origin.y, state: .ended)
+  }
+
+  fileprivate func handleGesture(_ y: CGFloat, state: DraggingState) {
+    DispatchQueue.main.async {
+      guard let interactor = self.interactor else { return }
+      if y > 0 {
+        interactor.hasStarted = false
+        interactor.cancel()
+        self.view.frame = self.orignalFrame
+        return
+      }
+
+      let percentThreshold:CGFloat = 0.4
+      let height = UIScreen.main.bounds.size.height
+
+      let progress = min( abs(y) / (height / 4), 1)
+
+      switch state {
+      case .began:
+        interactor.hasStarted = true
+        self.dismiss(animated: true, completion: nil)
+      case .changed:
+        if interactor.hasStarted == false { return }
+        interactor.shouldFinish = progress > percentThreshold
+        interactor.update(progress)
+      case .ended:
+        interactor.hasStarted = false
+        if interactor.shouldFinish { interactor.finish() } else {
+          interactor.cancel()
+          self.view.frame = self.orignalFrame
+        }
+      }
+    }
   }
 }
 

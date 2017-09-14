@@ -29,6 +29,8 @@ final class RepoListViewController: UIViewController {
 
   let interactor = Interactor()
 
+  override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -167,11 +169,12 @@ final class RepoListViewController: UIViewController {
     }
 
     self.viewModel.outpus.transitTo.observeForUI().observeValues { [weak self] (vc) in
-        self?.present(vc, animated: true, completion: nil)
-        vc.transitioningDelegate = self
-        if let mkvc = vc as? ReadmeViewController {
-          mkvc.interactor = self?.interactor
-        }
+      vc.transitioningDelegate = self
+      if let mkvc = vc as? ReadmeViewController {
+        mkvc.interactor = self?.interactor
+      }
+      self?.present(vc, animated: true, completion: nil)
+
     }
   }
 

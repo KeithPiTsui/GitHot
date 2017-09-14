@@ -26,9 +26,6 @@ internal protocol ReadmeViewControllerViewModelInputs {
   /// Call when a user session has started.
   func userSessionStarted()
 
-  /// Call when vc received a url for markup
-  func set(markup url: URL)
-
   /// Call when vc recived a repo for readme
   func set(repo: RepoProfile)
 }
@@ -59,11 +56,6 @@ ReadmeViewControllerViewModelOutputs {
       .flatMap{ AppEnvironment.apiService.readme(referredBy: $0) }
       .map { try? String(contentsOf: $0.download_url) }
       .skipNil()
-  }
-
-  fileprivate let setMarkupURLProperty = MutableProperty<URL?>(nil)
-  public func set(markup url: URL) {
-    self.setMarkupURLProperty.value = url
   }
 
   fileprivate let setRepoProfileProperty = MutableProperty<RepoProfile?>(nil)

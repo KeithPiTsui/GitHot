@@ -20,6 +20,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     AppEnvironment.initialize()
 
+    UIApplication.shared.setStatusBarStyle(.lightContent, animated: false)
+
     let win = UIWindow()
     let rootVC = RepoListViewController()
     win.rootViewController = rootVC
