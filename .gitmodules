@@ -1,0 +1,9 @@
+[submodule "Frameworks/Pavers"]
+	path = Frameworks/Pavers
+	url = https://github.com/KeithPiTsui/Pavers.git
+[submodule "Frameworks/Down"]
+	path = Frameworks/Down
+	url = https://github.com/KeithPiTsui/Down.git
+[submodule "Frameworks/GHAPI"]
+	path = Frameworks/GHAPI
+	url = https://github.com/KeithPiTsui/GHAPI.git
