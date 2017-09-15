@@ -7,6 +7,7 @@
 //
 
 import PaversFRP
+import GHAPI
 
 struct RepoProfile {
   let ownerName: String
@@ -16,6 +17,7 @@ struct RepoProfile {
   let allStars: UInt
   let periodStars: UInt
   let forks: UInt
+  let url: URL
 }
 
 extension RepoProfile {
@@ -28,7 +30,8 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $1.allStars,
                   periodStars: $1.periodStars,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let repoName = Lens<RepoProfile, String> (
       view:{$0.repoName},
@@ -38,7 +41,8 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $1.allStars,
                   periodStars: $1.periodStars,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let repoDesc = Lens<RepoProfile, String> (
       view:{$0.repoDesc},
@@ -48,7 +52,8 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $1.allStars,
                   periodStars: $1.periodStars,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let plName = Lens<RepoProfile, String> (
       view:{$0.plName},
@@ -58,7 +63,8 @@ extension RepoProfile {
                   plName: $0,
                   allStars: $1.allStars,
                   periodStars: $1.periodStars,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let allStars = Lens<RepoProfile, UInt> (
       view:{$0.allStars},
@@ -68,7 +74,8 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $0,
                   periodStars: $1.periodStars,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let periodStars = Lens<RepoProfile, UInt> (
       view:{$0.periodStars},
@@ -78,7 +85,8 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $1.allStars,
                   periodStars: $0,
-                  forks: $1.forks)}
+                  forks: $1.forks,
+                  url: $1.url)}
     )
     static let forks = Lens<RepoProfile, UInt> (
       view:{$0.forks},
@@ -88,13 +96,25 @@ extension RepoProfile {
                   plName: $1.plName,
                   allStars: $1.allStars,
                   periodStars: $1.periodStars,
-                  forks: $0)}
+                  forks: $0,
+                  url: $1.url)}
+    )
+    static let url = Lens<RepoProfile, URL> (
+      view:{$0.url},
+      set: {.init(ownerName: $1.ownerName,
+                  repoName:$1.repoName,
+                  repoDesc: $1.repoDesc,
+                  plName: $1.plName,
+                  allStars: $1.allStars,
+                  periodStars: $1.periodStars,
+                  forks: $1.forks,
+                  url: $0)}
     )
   }
 }
 
 extension RepoProfile {
-  static let example = RepoProfile(ownerName: "madebybowtie", repoName: "FlagKit", repoDesc: "Beautiful flag icons for usage in apps and on the web, Beautiful flag icons for usage in apps and on the web, Beautiful flag icons for usage in apps and on the web", plName: "Swift", allStars: 1662, periodStars: 20, forks: 107)
+  static let example = RepoProfile(ownerName: "madebybowtie", repoName: "FlagKit", repoDesc: "Beautiful flag icons for usage in apps and on the web, Beautiful flag icons for usage in apps and on the web, Beautiful flag icons for usage in apps and on the web", plName: "Swift", allStars: 1662, periodStars: 20, forks: 107, url: Secrets.Api.Endpoint.ghURL)
 }
 
 

@@ -46,16 +46,21 @@ ReadmeViewControllerViewModelInputs,
 ReadmeViewControllerViewModelOutputs {
 
   init() {
-    self.markupString = Signal
+
+    self.markupString  = Signal
       .combineLatest(self.setRepoProfileProperty.signal.skipNil(),
                      self.viewDidLoadProperty.signal)
       .map(first)
       .observeInBackground()
       .flatMap(.concat){AppEnvironment.apiService.repository(of: $0.ownerName, and: $0.repoName)}
-      .map{ $0.urls.url.appendingPathComponent("/contents/README.md") }
-      .flatMap{ AppEnvironment.apiService.readme(referredBy: $0) }
-      .map { try? String(contentsOf: $0.download_url) }
+      .flatMap{ repo in AppEnvironment.apiService.contents(of: repo, ref: repo.others.default_branch) }
+      .map{ $0.first(where: { $0.name.lowercased().hasPrefix("readme") }) }
       .skipNil()
+      .map{ $0.download_url }
+      .skipNil()
+      .map { try? String(contentsOf: $0) }
+      .skipNil()
+
   }
 
   fileprivate let setRepoProfileProperty = MutableProperty<RepoProfile?>(nil)

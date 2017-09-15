@@ -59,6 +59,7 @@ RepoListViewControllerViewModelOutputs {
       .map { _ in AppEnvironment.apiService.trendingRepository(of: .daily, with: "swift").single()?.value}
       .skipNil()
 
+
     self.repos
       = Signal.combineLatest(repos,
                              self.viewDidLoadProperty.signal,
@@ -126,6 +127,7 @@ extension RepoProfile {
                        plName: rp.programmingLanguage ?? "",
                        allStars: rp.totoalStars ?? 0,
                        periodStars: rp.periodStars ?? 0,
-                       forks: rp.periodStars ?? 0)
+                       forks: rp.periodStars ?? 0,
+                       url: rp.url ?? Secrets.Api.Endpoint.ghURL)
   }
 }

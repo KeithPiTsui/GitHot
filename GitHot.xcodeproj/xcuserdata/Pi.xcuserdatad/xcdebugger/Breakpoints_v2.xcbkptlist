@@ -2,4 +2,54 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Frameworks/Down/Source/Views/DownView.swift"
+            timestampString = "527160752.894085"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "update(markdownString:relativeURL:didLoadSuccessfully:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Down.DownView.update (markdownString : Swift.String, relativeURL : Swift.Optional&lt;Foundation.URL&gt;, didLoadSuccessfully : Swift.Optional&lt;() -&gt; ()&gt;) throws -&gt; ()"
+                  moduleName = "Down"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Pi/Library/Mobile%20Documents/com~apple~CloudDocs/XCode/GitHot/Frameworks/Down/Source/Views/DownView.swift"
+                  timestampString = "527158350.40033"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "51">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Down.DownView.update (markdownString : Swift.String, relativeURL : Swift.Optional&lt;Foundation.URL&gt;, didLoadSuccessfully : Swift.Optional&lt;() -&gt; ()&gt;) throws -&gt; ()"
+                  moduleName = "Down"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Pi/Library/Mobile%20Documents/com~apple~CloudDocs/XCode/GitHot/Frameworks/Down/Source/Views/DownView.swift"
+                  timestampString = "527158350.404248"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "134">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

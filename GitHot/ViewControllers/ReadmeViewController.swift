@@ -23,9 +23,14 @@ internal final class ReadmeViewController: UIViewController {
   fileprivate var hintsLabel: UILabel?
   fileprivate var card: UIView?
   fileprivate var blockedCard: UIView?
-  fileprivate var loaded = false
+  fileprivate var loadingAnimationShowed = false
+
+  fileprivate var pan: UIPanGestureRecognizer?
+
+  fileprivate var repo: RepoProfile?
   
   internal func set(repo: RepoProfile) {
+    self.repo = repo
     self.viewModel.inputs.set(repo: repo)
   }
 
@@ -52,6 +57,16 @@ internal final class ReadmeViewController: UIViewController {
     }
 
     self.orignalFrame = self.view.frame
+
+
+    let pan = UIPanGestureRecognizer(target: self, action: #selector(self.handleGesture(_:)))
+    self.view.addGestureRecognizer(pan)
+    self.pan = pan
+
+
+
+
+
     self.viewModel.inputs.viewDidLoad()
   }
 
@@ -72,17 +87,50 @@ internal final class ReadmeViewController: UIViewController {
   override func bindViewModel() {
     super.bindViewModel()
     self.viewModel.outpus.markupString.observeResult { [weak self] (result) in
-      guard let markup = result.value else { print("error: \(result.error!)"); return }
-      try? self?.webView?.update(markdownString: markup)
+      if let markup = result.value {
+
+        let url = self?.repo?.url.appendingPathComponent("raw/master/")
+
+        try? self?.webView?.update(markdownString: markup, relativeURL: url)
+      } else {
+        print("error: \(result.error!)")
+        // prompt to user to open url open safari
+        self?.alter()
+      }
     }
   }
 
   fileprivate var orignalFrame: CGRect = .zero
+
+  private func alter() {
+
+    let ownername = self.repo!.ownerName
+    let reponame = self.repo!.repoName
+
+    let alert = UIAlertController(title: "Error",
+                                  message: "Would you like to open \(ownername)\\\(reponame) on safari",
+                                  preferredStyle: .alert)
+
+    let ok = UIAlertAction(title: "Go", style: .default) { _ in
+      UIApplication.shared.open(self.repo!.url,
+                                options: [:],
+                                completionHandler: { (succeed) in
+        self.dismiss(animated: true, completion: nil)
+      })
+    }
+    let cancel = UIAlertAction(title: "back", style: .cancel) { _ in
+      self.dismiss(animated: true, completion: nil)
+    }
+    alert.addAction(ok)
+    alert.addAction(cancel)
+    self.present(alert, animated: true, completion: nil)
+  }
+
 }
 
 extension ReadmeViewController {
   fileprivate func loadingAnimating(){
-    if loaded { return }
+    if loadingAnimationShowed { return }
 
     let center = CGPoint(x: view.bounds.width * 0.5, y: 200)
     let small = CGSize(width: 30, height: 30)
@@ -102,16 +150,20 @@ extension ReadmeViewController {
     card.backgroundColor = .white
     card.layer.cornerRadius = 5
     card.layer.shadowOpacity = 0.8
-    card.layer.shadowOffset = CGSize.zero
+    card.layer.shadowOffset = CGSize(1,1)
+
 
 
     let blockedCardSizeWidth = self.view.bounds.size.width / 2
-    let blockedCardSizeHeight = blockedCardSizeWidth / self.view.bounds.size.ratioW2H
+//    let blockedCardSizeHeight = blockedCardSizeWidth / self.view.bounds.size.ratioW2H
     let blockedCardX = (self.view.bounds.size.width - blockedCardSizeWidth) / 2
     let blockedCardY = cardFrame.origin.y + cardFrame.size.height
-    let blockedCardFrame = CGRect(blockedCardX, blockedCardY, blockedCardSizeWidth, blockedCardSizeHeight)
+    let blockedCardFrame = CGRect(blockedCardX, blockedCardY, blockedCardSizeWidth, 0)
     let blockedCard = UIView(frame: blockedCardFrame)
     blockedCard.backgroundColor = UIColor.hex(0x576B71)
+    blockedCard.layer.cornerRadius = 5
+    blockedCard.layer.shadowOpacity = 0.8
+    blockedCard.layer.shadowOffset = CGSize(1,1)
 
     let label = UILabel()
     _ = label
@@ -123,6 +175,8 @@ extension ReadmeViewController {
     if let backView = self.backImageView {
       self.view.addSubview(backView)
       backView.frame = cardFrame
+      backView.clipsToBounds = true
+      backView.layer.cornerRadius = 5
     }
 
 
@@ -145,19 +199,34 @@ extension ReadmeViewController {
 
     self.hintsLabel = label
 
-    UIView.animate(
-      withDuration: 2,
-      delay: 0.25,
-      options: [.repeat],
-      animations: {
-        circle.frame.origin.y += 200
-        circle.layer.opacity = 0
-        card.frame.origin.y += 200
-    }
-    )
+    UIView.animateKeyframes(withDuration: 2,
+                            delay: 0,
+                            options: [.repeat, .calculationModeLinear],
+                            animations: { 
+                              UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.35, animations: {
+                                circle.frame.origin.y += 50
+                                circle.layer.opacity = 0.75
+                                card.frame.origin.y += 50
+                                blockedCard.frame.size.height += 50
+                              })
+                              UIView.addKeyframe(withRelativeStartTime: 0.35, relativeDuration: 0.4, animations: {
+                                circle.frame.origin.y -= 20
+                                circle.layer.opacity = 0.9
+                                card.frame.origin.y -= 20
+                                blockedCard.frame.size.height -= 20
+                              })
+                              UIView.addKeyframe(withRelativeStartTime: 0.75, relativeDuration: 0.25, animations: {
+                                circle.frame.origin.y += 180
+                                circle.layer.opacity = 0
+                                card.frame.origin.y += 180
+                                blockedCard.frame.size.height += 180
+                              })
+    },
+                            completion: nil)
 
-
+    self.loadingAnimationShowed = true
   }
+
 }
 
 // MARK: - WebView navigation handling
@@ -177,7 +246,19 @@ extension ReadmeViewController: WKNavigationDelegate {
                       decisionHandler: @escaping (WKNavigationActionPolicy)
     -> Swift.Void) {
     print("\(#function)--\(navigationAction)")
-    decisionHandler(.allow)
+    guard let url = navigationAction.request.url else { return }
+
+    switch navigationAction.navigationType {
+    case .linkActivated:
+      decisionHandler(.cancel)
+      #if os(iOS)
+        UIApplication.shared.openURL(url)
+      #elseif os(OSX)
+        NSWorkspace.shared().open(url)
+      #endif
+    default:
+      decisionHandler(.allow)
+    }
   }
 
 
@@ -225,7 +306,6 @@ extension ReadmeViewController: WKNavigationDelegate {
   public func webView(_ webView: WKWebView,
                       didFinish navigation: WKNavigation!) {
     print("\(#function)--\(navigation.description)")
-    self.loaded = true
     UIView.animate(withDuration: 0.5, animations: { 
       self.view.backgroundColor = .white
       self.circleView?.alpha = 0
@@ -245,6 +325,9 @@ extension ReadmeViewController: WKNavigationDelegate {
       self.card = nil
       self.blockedCard = nil
       self.backImageView = nil
+      if let pan = self.pan {
+        self.view.removeGestureRecognizer(pan)
+      }
     }
   }
 
@@ -349,6 +432,41 @@ extension ReadmeViewController: UIScrollViewDelegate {
       }
     }
   }
+
+
+  @objc fileprivate func handleGesture(_ sender: UIPanGestureRecognizer) {
+
+    let percentThreshold:CGFloat = 0.3
+
+    // convert y-position to downward pull progress (percentage)
+    let translation = sender.translation(in: view)
+    let verticalMovement = translation.y / view.bounds.height
+    let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
+    let downwardMovementPercent = fminf(downwardMovement, 1.0)
+    let progress = CGFloat(downwardMovementPercent)
+
+    guard let interactor = interactor else { return }
+
+    switch sender.state {
+    case .began:
+      interactor.hasStarted = true
+      dismiss(animated: true, completion: nil)
+    case .changed:
+      interactor.shouldFinish = progress > percentThreshold
+      interactor.update(progress)
+    case .cancelled:
+      interactor.hasStarted = false
+      interactor.cancel()
+    case .ended:
+      interactor.hasStarted = false
+      interactor.shouldFinish
+        ? interactor.finish()
+        : interactor.cancel()
+    default:
+      break
+    }
+  }
+
 }
 
 

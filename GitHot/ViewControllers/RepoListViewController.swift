@@ -9,6 +9,8 @@
 import UIKit
 import PaversUI
 import PaversFRP
+import GHAPI
+
 
 final class RepoListViewController: UIViewController {
 
@@ -180,6 +182,25 @@ final class RepoListViewController: UIViewController {
       self?.present(vc, animated: true, completion: nil)
 
     }
+  }
+
+  private func alter() {
+
+    let alert = UIAlertController(title: "Error",
+                                  message: "Would you like to open Trending on safari",
+      preferredStyle: .alert)
+
+    let ok = UIAlertAction(title: "Go", style: .default) { _ in
+      UIApplication.shared.open(Secrets.Api.Endpoint.ghTrendingURL,
+                                options: [:],
+                                completionHandler: nil)
+    }
+    let cancel = UIAlertAction(title: "Try Again", style: .cancel) { _ in
+      print("try again")
+    }
+    alert.addAction(ok)
+    alert.addAction(cancel)
+    self.present(alert, animated: true, completion: nil)
   }
 
   fileprivate var itemSizes = [IndexPath:CGSize]()

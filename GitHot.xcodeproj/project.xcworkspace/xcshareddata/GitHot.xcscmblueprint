@@ -1,15 +1,24 @@
 {
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CD5506E3185236A716F8C1CF8556DF3F494EEB36",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "FD10C5BB0EB96CD0BE35BBEB77EC0EBD663559F3" : 9223372036854775807,
     "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9" : 9223372036854775807,
-    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : 9223372036854775807
+    "C4ED17AD3E8183F45DFB599058C1F0A8FB78402E" : 9223372036854775807,
+    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : 9223372036854775807,
+    "F3D3B7EFF1017084DF8D43F57E075DC6367991FB" : 9223372036854775807,
+    "CD5506E3185236A716F8C1CF8556DF3F494EEB36" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0A610BA2-FBB1-4348-BAA4-D56EB3A569D0",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "FD10C5BB0EB96CD0BE35BBEB77EC0EBD663559F3" : "GitHot\/Frameworks\/Down\/",
     "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9" : "GitHot\/Frameworks\/GHAPI\/",
-    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : "GitHot\/GHAPI\/Pavers\/"
+    "C4ED17AD3E8183F45DFB599058C1F0A8FB78402E" : "GitHot\/Frameworks\/GHAPI\/Frameworks\/Ji\/",
+    "29B9092BBB2BA17BE73D7CCC9AD45E87AB4B663B" : "GitHot\/Frameworks\/Pavers\/",
+    "F3D3B7EFF1017084DF8D43F57E075DC6367991FB" : "GitHot\/Frameworks\/SwiftSoup\/",
+    "CD5506E3185236A716F8C1CF8556DF3F494EEB36" : "GitHot\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "GitHot",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,6 +33,26 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/GHAPI.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5E7FCDF539B2F3BC45CA957A3D11B8C34E9B20E9"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/Ji.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C4ED17AD3E8183F45DFB599058C1F0A8FB78402E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/GitHot.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CD5506E3185236A716F8C1CF8556DF3F494EEB36"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/scinfu\/SwiftSoup.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F3D3B7EFF1017084DF8D43F57E075DC6367991FB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/KeithPiTsui\/Down.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FD10C5BB0EB96CD0BE35BBEB77EC0EBD663559F3"
     }
   ]
 }
