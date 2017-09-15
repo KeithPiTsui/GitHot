@@ -173,6 +173,9 @@ final class RepoListViewController: UIViewController {
       vc.transitioningDelegate = self
       if let mkvc = vc as? ReadmeViewController {
         mkvc.interactor = self?.interactor
+        if let v = self?.view, let img = UIImage.image(of: v) {
+          mkvc.backImageView = UIImageView(image: img)
+        }
       }
       self?.present(vc, animated: true, completion: nil)
 
@@ -240,7 +243,16 @@ extension RepoListViewController: UIViewControllerTransitioningDelegate {
 }
 
 
-
+extension UIImage {
+  static func image(of view: UIView) -> UIImage? {
+    UIGraphicsBeginImageContext(view.bounds.size)
+    guard let context = UIGraphicsGetCurrentContext() else { return nil }
+    view.layer.render(in: context)
+    let img = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return img
+  }
+}
 
 
 

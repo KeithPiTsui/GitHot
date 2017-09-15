@@ -17,7 +17,13 @@ internal final class ReadmeViewController: UIViewController {
   fileprivate let viewModel: ReadmeViewControllerViewModelType = ReadmeViewControllerViewModel()
   fileprivate var webView: DownView?
 
-  var interactor:Interactor? = nil
+  internal var interactor:Interactor? = nil
+  internal var backImageView: UIImageView?
+  fileprivate var circleView: UIView?
+  fileprivate var hintsLabel: UILabel?
+  fileprivate var card: UIView?
+  fileprivate var blockedCard: UIView?
+  fileprivate var loaded = false
   
   internal func set(repo: RepoProfile) {
     self.viewModel.inputs.set(repo: repo)
@@ -26,7 +32,7 @@ internal final class ReadmeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = .white
+    self.view.backgroundColor = UIColor.hex(0x576B71)
 
     if let wv = try? DownView() {
 
@@ -40,6 +46,8 @@ internal final class ReadmeViewController: UIViewController {
       wv.scrollView.delegate = self
       wv.navigationDelegate = self
 
+      wv.alpha = 0
+
       self.webView = wv
     }
 
@@ -50,6 +58,11 @@ internal final class ReadmeViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.viewModel.inputs.viewWillAppear(animated: animated)
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.loadingAnimating()
   }
 
   override func bindStyles() {
@@ -67,43 +80,85 @@ internal final class ReadmeViewController: UIViewController {
   fileprivate var orignalFrame: CGRect = .zero
 }
 
-//extension ReadmeViewController {
-//
-//  override var preferredStatusBarStyle: UIStatusBarStyle {
-//
-//    guard var targetViewController = self.presentingViewController else {
-//      return .lightContent
-//    }
-//
-//    while let parentViewController = targetViewController.parent {
-//      targetViewController = parentViewController
-//    }
-//
-//    while let childViewController = targetViewController.childViewControllerForStatusBarStyle {
-//      targetViewController = childViewController
-//    }
-//
-//    return targetViewController.preferredStatusBarStyle
-//  }
-//
-//  override var prefersStatusBarHidden: Bool {
-//
-//    guard var targetViewController = self.presentingViewController else {
-//      return false
-//    }
-//
-//    while let parentViewController = targetViewController.parent {
-//      targetViewController = parentViewController
-//    }
-//
-//    while let childViewController = targetViewController.childViewControllerForStatusBarHidden {
-//      targetViewController = childViewController
-//    }
-//
-//    return targetViewController.prefersStatusBarHidden
-//  }
-//}
+extension ReadmeViewController {
+  fileprivate func loadingAnimating(){
+    if loaded { return }
 
+    let center = CGPoint(x: view.bounds.width * 0.5, y: 200)
+    let small = CGSize(width: 30, height: 30)
+    let frame = CGRect(origin: center, size: small)
+    let circle = UIView(frame: frame)
+    circle.layer.cornerRadius = circle.frame.width/2
+    circle.backgroundColor = UIColor.white
+    circle.layer.shadowOpacity = 0.8
+    circle.layer.shadowOffset = CGSize.zero
+
+    let cardSizeWidth = self.view.bounds.size.width / 2
+    let cardSizeHeight = cardSizeWidth / self.view.bounds.size.ratioW2H
+    let cardX = (self.view.bounds.size.width - cardSizeWidth) / 2
+    let cardY = center.y - cardSizeHeight * 0.2
+    let cardFrame = CGRect(cardX, cardY, cardSizeWidth, cardSizeHeight)
+    let card = UIView(frame: cardFrame)
+    card.backgroundColor = .white
+    card.layer.cornerRadius = 5
+    card.layer.shadowOpacity = 0.8
+    card.layer.shadowOffset = CGSize.zero
+
+
+    let blockedCardSizeWidth = self.view.bounds.size.width / 2
+    let blockedCardSizeHeight = blockedCardSizeWidth / self.view.bounds.size.ratioW2H
+    let blockedCardX = (self.view.bounds.size.width - blockedCardSizeWidth) / 2
+    let blockedCardY = cardFrame.origin.y + cardFrame.size.height
+    let blockedCardFrame = CGRect(blockedCardX, blockedCardY, blockedCardSizeWidth, blockedCardSizeHeight)
+    let blockedCard = UIView(frame: blockedCardFrame)
+    blockedCard.backgroundColor = UIColor.hex(0x576B71)
+
+    let label = UILabel()
+    _ = label
+      |> UILabel.lens.font .~ UIFont.ksr_headline()
+      >>> UILabel.lens.text .~ "Drag top down to back"
+      >>> UILabel.lens.textColor .~ .white
+      >>> UILabel.lens.alpha .~ 1
+
+    if let backView = self.backImageView {
+      self.view.addSubview(backView)
+      backView.frame = cardFrame
+    }
+
+
+    self.view.addSubview(card)
+    self.card = card
+
+    view.addSubview(circle)
+    self.circleView = circle
+
+    self.view.addSubview(blockedCard)
+    self.blockedCard = blockedCard
+
+    self.view.addSubview(label)
+
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    label.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor,
+                               constant: 20).isActive = true
+
+
+    self.hintsLabel = label
+
+    UIView.animate(
+      withDuration: 2,
+      delay: 0.25,
+      options: [.repeat],
+      animations: {
+        circle.frame.origin.y += 200
+        circle.layer.opacity = 0
+        card.frame.origin.y += 200
+    }
+    )
+
+
+  }
+}
 
 // MARK: - WebView navigation handling
 
@@ -170,6 +225,27 @@ extension ReadmeViewController: WKNavigationDelegate {
   public func webView(_ webView: WKWebView,
                       didFinish navigation: WKNavigation!) {
     print("\(#function)--\(navigation.description)")
+    self.loaded = true
+    UIView.animate(withDuration: 0.5, animations: { 
+      self.view.backgroundColor = .white
+      self.circleView?.alpha = 0
+      self.webView?.alpha = 1
+      self.hintsLabel?.alpha = 0
+      self.blockedCard?.alpha = 0
+      self.card?.alpha = 0
+      self.backImageView?.alpha = 0
+    }) { _ in
+      self.circleView?.removeFromSuperview()
+      self.hintsLabel?.removeFromSuperview()
+      self.blockedCard?.removeFromSuperview()
+      self.card?.removeFromSuperview()
+      self.backImageView?.removeFromSuperview()
+      self.circleView = nil
+      self.hintsLabel = nil
+      self.card = nil
+      self.blockedCard = nil
+      self.backImageView = nil
+    }
   }
 
 
