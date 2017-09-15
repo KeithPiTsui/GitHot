@@ -18,6 +18,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
+//    NSUInteger cacheSizeMemory = 500*1024*1024; // 500 MB
+//    NSUInteger cacheSizeDisk = 500*1024*1024; // 500 MB
+//    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
+//    [NSURLCache setSharedURLCache:sharedCache];
+//    sleep(1);
+
+    let sharedCache = URLCache(memoryCapacity: 500*1024*1024,
+                               diskCapacity: 500*1024*1024,
+                               diskPath: "nsurlcache")
+    URLCache.shared = sharedCache
+    sleep(1)
+
     AppEnvironment.initialize()
 
     UIApplication.shared.setStatusBarStyle(.lightContent, animated: false)

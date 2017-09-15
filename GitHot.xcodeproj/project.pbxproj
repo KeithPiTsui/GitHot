@@ -57,6 +57,8 @@
 		0ECFC9CF1F6AA2850001317F /* GHAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECFC9AE1F6AA2460001317F /* GHAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0ECFC9D21F6AA2850001317F /* Down.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECFC99D1F6AA23A0001317F /* Down.framework */; };
 		0ECFC9D31F6AA2850001317F /* Down.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECFC99D1F6AA23A0001317F /* Down.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		0EEABD671F6C134E00E19A34 /* SwiftSoup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEABD661F6C134E00E19A34 /* SwiftSoup.framework */; };
+		0EEABD681F6C134E00E19A34 /* SwiftSoup.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0EEABD661F6C134E00E19A34 /* SwiftSoup.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +206,7 @@
 			files = (
 				0E032CA21F6AB87100B83434 /* PaversArgo.framework in Embed Frameworks */,
 				0ECFC9CB1F6AA2850001317F /* PaversFRP.framework in Embed Frameworks */,
+				0EEABD681F6C134E00E19A34 /* SwiftSoup.framework in Embed Frameworks */,
 				0ECFC9C71F6AA2850001317F /* PaversUI.framework in Embed Frameworks */,
 				0ECFC9D31F6AA2850001317F /* Down.framework in Embed Frameworks */,
 				0ECFC9CF1F6AA2850001317F /* GHAPI.framework in Embed Frameworks */,
@@ -269,6 +272,7 @@
 		0ECFC9941F6AA23A0001317F /* Down.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Down.xcodeproj; path = Down/Down.xcodeproj; sourceTree = "<group>"; };
 		0ECFC9A61F6AA2450001317F /* GHAPI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GHAPI.xcodeproj; path = GHAPI/GHAPI.xcodeproj; sourceTree = "<group>"; };
 		0ECFC9B11F6AA2550001317F /* Pavers.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pavers.xcodeproj; path = Pavers/Pavers/Pavers.xcodeproj; sourceTree = "<group>"; };
+		0EEABD661F6C134E00E19A34 /* SwiftSoup.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftSoup.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +282,7 @@
 			files = (
 				0E032CA11F6AB87100B83434 /* PaversArgo.framework in Frameworks */,
 				0ECFC9CA1F6AA2850001317F /* PaversFRP.framework in Frameworks */,
+				0EEABD671F6C134E00E19A34 /* SwiftSoup.framework in Frameworks */,
 				0ECFC9C61F6AA2850001317F /* PaversUI.framework in Frameworks */,
 				0ECFC9D21F6AA2850001317F /* Down.framework in Frameworks */,
 				0ECFC9CE1F6AA2850001317F /* GHAPI.framework in Frameworks */,
@@ -457,6 +462,7 @@
 		0E78733D1F4BFDBC002600BE = {
 			isa = PBXGroup;
 			children = (
+				0EEABD661F6C134E00E19A34 /* SwiftSoup.framework */,
 				0E032CAD1F6AB97100B83434 /* Ji.framework */,
 				0E43A5151F53FF53007C8E20 /* GitHot.playground */,
 				0E7873691F4BFE5A002600BE /* Frameworks */,
