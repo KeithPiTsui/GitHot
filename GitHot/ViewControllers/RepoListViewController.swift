@@ -169,6 +169,7 @@ final class RepoListViewController: UIViewController {
     }
 
     self.viewModel.outpus.transitTo.observeForUI().observeValues { [weak self] (vc) in
+      vc.modalTransitionStyle = .crossDissolve
       vc.transitioningDelegate = self
       if let mkvc = vc as? ReadmeViewController {
         mkvc.interactor = self?.interactor
